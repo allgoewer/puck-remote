@@ -10,10 +10,27 @@
     <body>
         <button type="button" id="connect">Connect</button>
         <div id="controls">
-            <button type="button" onclick="sendCode(0)">Power</button>
-            <button type="button" onclick="sendCode(1)">Mute / Unmute</button>
-            <button type="button" onclick="sendCode(2)">Volume +</button>
-            <button type="button" onclick="sendCode(3)">Volume -</button>
+            <button type="button" onclick="bleRemote.send(0)">Power</button>
+            <button type="button" onclick="bleRemote.send(1)">Mute / Unmute</button>
+            <button type="button" onclick="bleRemote.send(2)">Volume +</button>
+            <button type="button" onclick="bleRemote.send(3)">Volume -</button>
         </div>
+
+        <script>
+            window.onload = function() {
+                let buttonConnect = document.getElementById("connect");
+                bleRemote = new BleRemote(buttonConnect);
+
+                buttonConnect.addEventListener('pointerup', function(evt) {
+                    if (bleRemote.connected()) {
+                        bleRemote.disconnect();
+                    } else {
+                        bleRemote.connect();
+                    }
+                });
+            };
+
+
+        </script>
     </body>
 </html>
